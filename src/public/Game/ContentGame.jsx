@@ -19,13 +19,15 @@ const ContentGame = () => {
   const handleRestartTime = () => {
     setTime(0);
     setIsCheck([]);
-    const newPositions = countPoints.map(() => ({
+
+    const array = Array.from({ length: Number(value) }, (_, i) => i + 1);
+    setCountPoints(array);
+    const newPositions = array.map(() => ({
       left: `${Math.random() * 90}%`,
       top: `${Math.random() * 90}%`,
     }));
+    console.log("array", array);
     setPositions(newPositions);
-    const array = Array.from({ length: Number(value) }, (_, i) => i + 1);
-    setCountPoints(array);
     setNextNumber(1);
     setIsRunning(true);
   };
@@ -52,18 +54,18 @@ const ContentGame = () => {
 
   return (
     <form className="w-full space-y-2">
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-4 sm:grid-cols-5">
         <label>Points: </label>
         <input
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
           }}
-          className="border px-1"
+          className="border px-1 "
           placeholder="Enter points"
         />
       </div>
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-4 sm:grid-cols-5">
         <span className="font-sans text-base">Time:</span>
         <span
           className={classNames("font-sans text-lg", {
@@ -80,7 +82,7 @@ const ContentGame = () => {
         className={classNames(
           "border px-5 py-2 bg-red-500 text-white font-sans rounded-md hover:opacity-85",
           {
-            "hover:opacity-100 bg-slate-500": Number(value) <= 0,
+            "bg-slate-500": Number(value) <= 0,
           }
         )}
         disabled={Number(value) > 0 ? false : true}

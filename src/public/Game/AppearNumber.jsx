@@ -13,14 +13,15 @@ const AppearNumber = () => {
   } = React.useContext(CountContext);
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-96 border">
       {countPoints?.length > 0 &&
         countPoints.map((number, index) => (
           <p
             className={classNames(
               "absolute w-10 h-10 border rounded-full flex items-center justify-center hover:opacity-70 hover:cursor-pointer",
               {
-                hidden: isCheck.includes(number),
+                "opacity-0 animate__animated animate__fadeOut bg-red-500 text-white":
+                  isCheck.includes(number),
                 "pointer-events-none opacity-50": number !== nextNumber,
               }
             )}
