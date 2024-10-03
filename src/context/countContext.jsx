@@ -9,6 +9,7 @@ export const CountProvider = ({ children }) => {
   const [isCheck, setIsCheck] = React.useState([]);
   const [nextNumber, setNextNumber] = React.useState(1);
   const [countPoints, setCountPoints] = React.useState([]);
+  const [positions, setPositions] = React.useState([]);
 
   const context = {
     countPoints,
@@ -17,6 +18,8 @@ export const CountProvider = ({ children }) => {
     setIsCheck,
     nextNumber,
     setNextNumber,
+    positions,
+    setPositions,
   };
   return (
     <CountContext.Provider value={context}>{children}</CountContext.Provider>

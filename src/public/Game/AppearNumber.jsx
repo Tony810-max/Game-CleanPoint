@@ -3,13 +3,19 @@ import { CountContext } from "../../context/countContext";
 import classNames from "classnames";
 
 const AppearNumber = () => {
-  const { countPoints, isCheck, setIsCheck, setNextNumber, nextNumber } =
-    React.useContext(CountContext);
+  const {
+    countPoints,
+    isCheck,
+    setIsCheck,
+    setNextNumber,
+    nextNumber,
+    positions,
+  } = React.useContext(CountContext);
 
   return (
     <div className="relative w-full h-screen">
       {countPoints?.length > 0 &&
-        countPoints.map((number) => (
+        countPoints.map((number, index) => (
           <p
             className={classNames(
               "absolute w-10 h-10 border rounded-full flex items-center justify-center hover:opacity-70 hover:cursor-pointer",
@@ -20,8 +26,8 @@ const AppearNumber = () => {
             )}
             key={number}
             style={{
-              left: `${Math.random() * 90}%`,
-              top: `${Math.random() * 90}%`,
+              left: positions[index]?.left,
+              top: positions[index]?.top,
             }}
             onClick={() => {
               setIsCheck((prev) => [...prev, number]);

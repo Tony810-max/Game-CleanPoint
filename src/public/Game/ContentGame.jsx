@@ -3,14 +3,27 @@ import { CountContext } from "../../context/countContext";
 import classNames from "classnames";
 
 const ContentGame = () => {
+  const [value, setValue] = React.useState(0);
   const [time, setTime] = React.useState(0);
   const [isRunning, setIsRunning] = React.useState(false);
-  const [value, setValue] = React.useState(0);
-  const { countPoints, setCountPoints, setIsCheck, setNextNumber, isCheck } =
-    React.useContext(CountContext);
+
+  const {
+    countPoints,
+    setCountPoints,
+    setIsCheck,
+    setNextNumber,
+    isCheck,
+    setPositions,
+  } = React.useContext(CountContext);
+
   const handleRestartTime = () => {
     setTime(0);
     setIsCheck([]);
+    const newPositions = countPoints.map(() => ({
+      left: `${Math.random() * 90}%`,
+      top: `${Math.random() * 90}%`,
+    }));
+    setPositions(newPositions);
     const array = Array.from({ length: Number(value) }, (_, i) => i + 1);
     setCountPoints(array);
     setNextNumber(1);
@@ -20,6 +33,8 @@ const ContentGame = () => {
   React.useEffect(() => {
     if (isCheck.length === countPoints.length && countPoints.length > 0) {
       setIsRunning(false);
+
+      // alert("You are winner..!!!");
     }
   }, [isCheck, countPoints]);
 
@@ -62,7 +77,13 @@ const ContentGame = () => {
       <button
         type="button"
         onClick={handleRestartTime}
-        className="border px-5 py-2 bg-red-500 text-white font-sans rounded-md hover:opacity-85"
+        className={classNames(
+          "border px-5 py-2 bg-red-500 text-white font-sans rounded-md hover:opacity-85",
+          {
+            "hover:opacity-100 bg-slate-500": Number(value) <= 0,
+          }
+        )}
+        disabled={Number(value) > 0 ? false : true}
       >
         Restart
       </button>
